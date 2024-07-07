@@ -104,7 +104,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_starts_with_spelled_digit() {
+    fn test_stars_with_spelled_digit_exact_matches() {
         assert_eq!(starts_with_spelled_digit("one"), (true, 1));
         assert_eq!(starts_with_spelled_digit("two"), (true, 2));
         assert_eq!(starts_with_spelled_digit("three"), (true, 3));
@@ -114,8 +114,19 @@ mod tests {
         assert_eq!(starts_with_spelled_digit("seven"), (true, 7));
         assert_eq!(starts_with_spelled_digit("eight"), (true, 8));
         assert_eq!(starts_with_spelled_digit("nine"), (true, 9));
-        assert_eq!(starts_with_spelled_digit("onee"), (true, 1));
-        assert_eq!(starts_with_spelled_digit("onf"), (false, 0));
+    }
+
+    #[test]
+    fn test_stars_with_spelled_digit_partial_matches() {
+        assert_eq!(starts_with_spelled_digit("oneth"), (true, 1));
+        assert_eq!(starts_with_spelled_digit("twot"), (true, 2));
+        assert_eq!(starts_with_spelled_digit("threefold"), (true, 3));
+        assert_eq!(starts_with_spelled_digit("fourth"), (true, 4));
+        assert_eq!(starts_with_spelled_digit("fives"), (true, 5));
+        assert_eq!(starts_with_spelled_digit("sixth"), (true, 6));
+        assert_eq!(starts_with_spelled_digit("seventh"), (true, 7));
+        assert_eq!(starts_with_spelled_digit("eighteen"), (true, 8));
+        assert_eq!(starts_with_spelled_digit("ninety"), (true, 9));
     }
 
     #[test]
