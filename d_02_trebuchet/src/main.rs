@@ -13,15 +13,15 @@ const SPELLING_TO_DIGIT: [(&str, i32); 9] = [
     ("nine", 9),
 ];
 
-fn starts_with_spelled_digit(word: &str) -> (bool, i32) {
+fn starts_with_spelled_digit(word: &str) -> Option<i32> {
     for (spelling, digit) in SPELLING_TO_DIGIT {
         match word.starts_with(spelling) {
-            true => return (true, digit),
+            true => return Some(digit),
             false => (),
         }
     }
 
-    (false, 0)
+    None
 }
 
 fn tail(line: &str, start: usize) -> String {
@@ -52,7 +52,7 @@ fn get_calibration(line: &str) -> i32 {
             digits.push(c);
         } else {
             match starts_with_spelled_digit(&word) {
-                (true, digit) => {
+                Some(digit) => {
                     for d in digit.to_string().chars() {
                         digits.push(d);
                     }
@@ -105,28 +105,28 @@ mod tests {
 
     #[test]
     fn test_stars_with_spelled_digit_exact_matches() {
-        assert_eq!(starts_with_spelled_digit("one"), (true, 1));
-        assert_eq!(starts_with_spelled_digit("two"), (true, 2));
-        assert_eq!(starts_with_spelled_digit("three"), (true, 3));
-        assert_eq!(starts_with_spelled_digit("four"), (true, 4));
-        assert_eq!(starts_with_spelled_digit("five"), (true, 5));
-        assert_eq!(starts_with_spelled_digit("six"), (true, 6));
-        assert_eq!(starts_with_spelled_digit("seven"), (true, 7));
-        assert_eq!(starts_with_spelled_digit("eight"), (true, 8));
-        assert_eq!(starts_with_spelled_digit("nine"), (true, 9));
+        assert_eq!(starts_with_spelled_digit("one"), Some(1));
+        assert_eq!(starts_with_spelled_digit("two"), Some(2));
+        assert_eq!(starts_with_spelled_digit("three"), Some(3));
+        assert_eq!(starts_with_spelled_digit("four"), Some(4));
+        assert_eq!(starts_with_spelled_digit("five"), Some(5));
+        assert_eq!(starts_with_spelled_digit("six"), Some(6));
+        assert_eq!(starts_with_spelled_digit("seven"), Some(7));
+        assert_eq!(starts_with_spelled_digit("eight"), Some(8));
+        assert_eq!(starts_with_spelled_digit("nine"), Some(9));
     }
 
     #[test]
     fn test_stars_with_spelled_digit_partial_matches() {
-        assert_eq!(starts_with_spelled_digit("oneth"), (true, 1));
-        assert_eq!(starts_with_spelled_digit("twot"), (true, 2));
-        assert_eq!(starts_with_spelled_digit("threefold"), (true, 3));
-        assert_eq!(starts_with_spelled_digit("fourth"), (true, 4));
-        assert_eq!(starts_with_spelled_digit("fives"), (true, 5));
-        assert_eq!(starts_with_spelled_digit("sixth"), (true, 6));
-        assert_eq!(starts_with_spelled_digit("seventh"), (true, 7));
-        assert_eq!(starts_with_spelled_digit("eighteen"), (true, 8));
-        assert_eq!(starts_with_spelled_digit("ninety"), (true, 9));
+        assert_eq!(starts_with_spelled_digit("oneth"), Some(1));
+        assert_eq!(starts_with_spelled_digit("twot"), Some(2));
+        assert_eq!(starts_with_spelled_digit("threefold"), Some(3));
+        assert_eq!(starts_with_spelled_digit("fourth"), Some(4));
+        assert_eq!(starts_with_spelled_digit("fives"), Some(5));
+        assert_eq!(starts_with_spelled_digit("sixth"), Some(6));
+        assert_eq!(starts_with_spelled_digit("seventh"), Some(7));
+        assert_eq!(starts_with_spelled_digit("eighteen"), Some(8));
+        assert_eq!(starts_with_spelled_digit("ninety"), Some(9));
     }
 
     #[test]
