@@ -1,28 +1,6 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-fn starts_with(word: &str, spelling: &str) -> bool {
-    let mut index = 0;
-
-    for c in word.chars() {
-        if index == spelling.len() {
-            return true;
-        }
-
-        if c == spelling.chars().nth(index).expect("Error here") {
-            index += 1;
-        } else {
-            return false;
-        }
-    }
-
-    if index == spelling.len() {
-        return true;
-    }
-
-    false
-}
-
 const SPELLING_TO_DIGIT: [(&str, i32); 9] = [
     ("one", 1),
     ("two", 2),
@@ -37,7 +15,7 @@ const SPELLING_TO_DIGIT: [(&str, i32); 9] = [
 
 fn starts_with_spelled_digit(word: &str) -> (bool, i32) {
     for (spelling, digit) in SPELLING_TO_DIGIT {
-        match starts_with(word, spelling) {
+        match word.starts_with(spelling) {
             true => return (true, digit),
             false => (),
         }
@@ -124,16 +102,6 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_starts_with() {
-        assert_eq!(starts_with("one", "one"), true);
-        assert_eq!(starts_with("one", "on"), true);
-        assert_eq!(starts_with("one", "o"), true);
-        assert_eq!(starts_with("one", "onee"), false);
-        assert_eq!(starts_with("one", "onf"), false);
-        assert_eq!(starts_with("one", "o"), true);
-    }
 
     #[test]
     fn test_starts_with_spelled_digit() {
